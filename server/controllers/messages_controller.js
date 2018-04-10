@@ -5,6 +5,7 @@ module.exports = {
   create: ( req, res ) => {
     const { text, time } = req.body;
     messages.push({ id, text, time });
+    req.session.user.messages.push({ id, text, time });
     id++;
     res.status(200).send( messages );
   },
@@ -15,10 +16,13 @@ module.exports = {
 
   update: ( req, res ) => {
     const { text } = req.body;
-    const updateID = req.params.id;
+    const updateID = req.query.id;
+    //This part I don't understand as much:
     const messageIndex = messages.findIndex( message => message.id == updateID );
     let message = messages[ messageIndex ];
 
+
+    //This part I don't understand as much:
     messages[ messageIndex ] = {
       id: message.id,
       text: text || message.text,
@@ -29,9 +33,14 @@ module.exports = {
   },
 
   delete: ( req, res ) => {
-    const deleteID = req.params.id;
+    const deleteID = req.query.id;
     messageIndex = messages.findIndex( message => message.id == deleteID );
     messages.splice(messageIndex, 1);
     res.status(200).send( messages );
+  },
+
+  history: (req, res) => {
+    res.status(200).send( req.session.user.messages )
+
   }
 };
