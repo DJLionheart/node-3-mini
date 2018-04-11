@@ -2,9 +2,10 @@ require('dotenv').config();
 const express = require('express'),
       bodyParser = require('body-parser'),
       session = require('express-session'),
-      mc = require( `${__dirname}/controllers/messages_controller` ),
-      createInitialSession = require(`${__dirname}/middlewares/session`),
-      filter = require(`${__dirname}/middlewares/filter`)
+      mc = require( `${__dirname}/controllers/messages_controller` );
+
+const createInitialSession = require(`${__dirname}/middlewares/session`),
+      filter = require(`${__dirname}/middlewares/filter`);
 
 const app = express();
 
